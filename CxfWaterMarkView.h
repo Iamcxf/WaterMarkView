@@ -9,9 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface CxfWaterMarkView : UIView<UITableViewDelegate,UITableViewDataSource>
-
-@property (nonatomic,strong)UITableView *tableView;
-@property (nonatomic,strong)NSMutableArray *dataSource;
 //创建水印View
-+(CxfWaterMarkView*)addWaterMarkView;
++(CxfWaterMarkView*)addWaterMarkView:(NSString*)waterMarkText;
 @end

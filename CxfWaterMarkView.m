@@ -9,19 +9,28 @@
 #import "CxfWaterMarkView.h"
 #import "CxfWaterMarkTableViewCell.h"
 
+@interface CxfWaterMarkView()<UITableViewDelegate,UITableViewDataSource>
+
+@property (nonatomic,strong)UITableView *tableView;
+@property (nonatomic,strong)NSMutableArray *dataSource;
+@property (nonatomic,strong)NSString *waterMarkText;
+
+@end
+
 @implementation CxfWaterMarkView
 
-+(CxfWaterMarkView*)addWaterMarkView{
-    CxfWaterMarkView *watermarkView =  [[CxfWaterMarkView alloc] initWithFrame:CGRectMake(-screen_height,-screen_height, screen_height*3, screen_height*3)];
++(CxfWaterMarkView*)addWaterMarkView:(NSString*)waterMarkText{
+    CxfWaterMarkView *watermarkView =  [[CxfWaterMarkView alloc] initWithFrame:CGRectMake(-screen_height,-screen_height, screen_height*3, screen_height*3) waterMarkText:waterMarkText];
     watermarkView.transform = CGAffineTransformMakeRotation(-M_PI*0.25);
     return watermarkView;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame waterMarkText:(NSString*)waterMarkText
 {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
+        self.waterMarkText = waterMarkText;
         [self setUI];
     }
     return self;
@@ -91,7 +100,7 @@
         for (int i = 0; i<screen_height*3/100*[CxfUtils getRate]; i++) {
             NSString *str = @"";
             for (int j = 0; j<50; j++) {
-                str = [NSString stringWithFormat:@"%@        全屏水印",str];
+                str = [NSString stringWithFormat:@"%@        %@",str,self.waterMarkText];
             }
             if (i%2 == 0) {
                 [_dataSource addObject:str];
